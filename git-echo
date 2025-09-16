@@ -83,9 +83,12 @@ echo_git() {
   git --git-dir="$ECHO_GIT_DIR" --work-tree="$REPO_ROOT" "$@"
 }
 
-sync_core_config() {
+sync_repo_config() {
+  # Keep behaviour consistent between the main and echo repositories by copying
+  # key configuration, including the author identity to keep commits working in
+  # environments without global Git configuration.
   local key value
-  for key in core.autocrlf core.eol core.filemode; do
+  for key in core.autocrlf core.eol core.filemode user.name user.email; do
     if value=$(git config --get "$key" 2>/dev/null); then
       echo_git config "$key" "$value"
     fi
@@ -123,6 +126,7 @@ refresh_ignore_rules() {
 
 maybe_refresh_ignore_rules() {
   if [[ -d "$ECHO_GIT_DIR" ]]; then
+    sync_repo_config
     refresh_ignore_rules
     update_main_exclude_rules
   fi
@@ -221,11 +225,11 @@ handle_init() {
   fi
 
   mkdir -p "$ECHO_GIT_DIR"
-  git init --bare "$ECHO_GIT_DIR" >/dev/null
+  git init --bare --initial-branch=echo "$ECHO_GIT_DIR" >/dev/null
   echo_git config core.worktree "$REPO_ROOT"
   echo_git config core.bare false
   echo_git symbolic-ref HEAD refs/heads/echo >/dev/null
-  sync_core_config
+  sync_repo_config
   refresh_ignore_rules
   update_main_exclude_rules
 
