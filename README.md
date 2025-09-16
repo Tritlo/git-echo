@@ -62,9 +62,6 @@ Run `git echo` or `git echo help` for the full usage summary.
 - The helper rewrites `.git/echo/info/exclude` on demand, so avoid editing the
   file manually. If you need extra ignore patterns, add them through the main
   repository or extend the script.
-- Unit tests are not yet included. When extending the tool, consider automating
-  the manual sanity checks (initialisation, add/commit of ignored files, force
-  add behaviour) described in the review document.
 
 ## Tests
 
