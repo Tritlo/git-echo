@@ -12,6 +12,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Run git-twin tests
+      - name: Run git-echo tests
         run: |
           bash tests/run.sh
