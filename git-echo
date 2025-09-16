@@ -95,6 +95,21 @@ sync_repo_config() {
   done
 }
 
+sync_identity_config() {
+  resolve_paths
+
+  local key value
+  for key in user.name user.email; do
+    if echo_git config --get "$key" >/dev/null 2>&1; then
+      continue
+    fi
+
+    if value=$(git -C "$REPO_ROOT" config --get "$key" 2>/dev/null); then
+      echo_git config "$key" "$value"
+    fi
+  done
+}
+
 refresh_ignore_rules() {
   resolve_paths
   local exclude_dir="$ECHO_GIT_DIR/info"
@@ -229,6 +244,7 @@ handle_init() {
   echo_git config core.worktree "$REPO_ROOT"
   echo_git config core.bare false
   echo_git symbolic-ref HEAD refs/heads/echo >/dev/null
+  sync_identity_config
   sync_repo_config
   refresh_ignore_rules
   update_main_exclude_rules
@@ -271,6 +287,7 @@ handle_add() {
 handle_commit() {
   ensure_echo_exists
   maybe_refresh_ignore_rules
+  sync_identity_config
   if echo_git commit "$@"; then
     update_main_exclude_rules
   else
