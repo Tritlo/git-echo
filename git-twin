@@ -149,6 +149,7 @@ handle_init() {
   mkdir -p "$TWIN_GIT_DIR"
   git init --bare "$TWIN_GIT_DIR" >/dev/null
   twin_git config core.worktree "$REPO_ROOT"
+  twin_git config core.bare false
   twin_git symbolic-ref HEAD refs/heads/twin >/dev/null
   sync_core_config
   refresh_ignore_rules

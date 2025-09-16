@@ -62,3 +62,20 @@ Run `git twin` or `git twin help` for the full usage summary.
 - Unit tests are not yet included. When extending the tool, consider automating
   the manual sanity checks (initialisation, add/commit of ignored files, force
   add behaviour) described in the review document.
+
+## Tests
+
+Run the automated smoke tests with:
+
+```bash
+./tests/run.sh
+```
+
+The script creates throwaway repositories under `/tmp` and validates the
+initialisation flow, force-add behaviour, and disabled branch commands.
+Continuous integration runs the same suite via GitHub Actions.
+
+## License
+
+Released under the [MIT License](LICENSE). Copyright © 2025
+Matthias Pall Gissurarson.
