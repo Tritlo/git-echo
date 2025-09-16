@@ -1,5 +1,8 @@
 # Git Echo Utility
 
+<img width="350" alt="image" src="https://github.com/user-attachments/assets/90468c93-ec0d-4ef4-acf3-2bc202b7f628" />
+
+
 `git-echo` provides a lightweight "echo" Git repository stored at `.git/echo`. The
 secondary repository shares the primary worktree but is intended to track files
 ignored by the main project (personal settings, experiments, etc.).
