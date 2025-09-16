@@ -26,7 +26,7 @@ create_repo() {
   repo=$(mktemp -d "$TMP_ROOT/repo.XXXXXX")
   (
     cd "$repo"
-    git init >/dev/null
+    git init --quiet --initial-branch=main
     git config user.email "test@example.com"
     git config user.name "Git echo Tests"
   )
